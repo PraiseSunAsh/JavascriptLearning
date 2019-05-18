@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var sum = function (a, b) {
+            return a + b;
+        }
+        function sum(a, b) {
+            return a + b;
+        }
+        //这二者时完全等价的，其中sum只是个指向函数对象的指针，并不是函数
+        //当然，他们的本质应该是这样的，但不推荐这样写（性能问题）
+        var sum = new Function("a", "b", "return a+b");
+        //这种写法也证明了函数是对象，函数名是指针
+
+        //既然函数名仅仅是个指针，然么肯定允许多个指针指向同一个函数对象
+        //换句话说，就是一个函数可以起多个名字
+        function sum(num1, num2) {
+            return num1 + num2;
+        }
+        alert(sum(10, 10));        //20
+
+        var anotherSum = sum;
+        alert(anotherSum(10, 10)); //20
+
+        sum = null;
+        alert(anotherSum(10, 10)); //20
+    </script>
+</body>
+
+</html>
