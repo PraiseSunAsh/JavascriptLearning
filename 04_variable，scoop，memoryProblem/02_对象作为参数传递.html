@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function setname(obj){
+            //为传进来的对象设置一个name属性
+            obj.name = "jasonleeeeee";
+            //重写obj时，obj所指向的就成了一个局部对象（变量）
+            obj = new Object();
+            obj.name = "PraseSunAsh";
+            //函数执行完之后，局部对象就被销毁了
+        }
+        var person = new Object();
+        setname(person);
+        console.log(person.name);//jasonleeeeee
+        console.log("-------------");
+        
+    </script>
+</body>
+</html>
