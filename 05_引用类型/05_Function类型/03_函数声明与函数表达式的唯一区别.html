@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        
+        console.log(sum(10,10));
+        var sum = function (a,b) { return a+b };
+        //这样写是会报错的，因为在执行的时候sum没有指向函数对象
+
+        console.log(fac(10,10));
+        function fac(a,b) {
+            return a*b;
+        }
+        //先调用后声明反而不会报错
+        //因为解析器有一个function declaration hoisting的过程
+    </script>
+</body>
+
+</html>
