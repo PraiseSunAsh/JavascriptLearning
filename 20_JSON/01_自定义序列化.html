@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //第二个参数传数组时
+        var book1= {
+            "title":"js从入门到女装",
+            "authors":["Jasonleeeeee","PraiseSunAsh"],
+            edition:3,
+            year:2011
+        }
+        //我只要title和edition的信息
+        var JSONText = JSON.stringify(book1,["title","edition"]);
+        console.log(JSONText);
+
+    //第二个参数传函数时
+    var book2= {
+            "title":"js从入门到女装",
+            "authors":["Jasonleeeeee","PraiseSunAsh"],
+            edition:3,
+            year:2011
+        }
+        
+        var JSONText2 = JSON.stringify(book2,function(key,value){
+            switch(key){
+                case "authors": return value.join(",");
+                //如果为“author”,就返回一个拼接value的动作（也就是把数组中的名字用逗号连接）
+                case "year": return 5000;
+                //如果为"year",就返回一个新的value
+                case "edition": return undefined;
+                //如果返回undefined，就等于删除了这个属性
+                default: return value;
+                //其他情况就返回key的value（也就是每个属性的字面值）
+            }
+        });
+        console.log(JSONText2);
+    //第三个参数决定了JSON数组缩进几个空格或者某种特定格式,很简单，这里不上代码了
+    
+
+    //如果要转JSON的对象中存在toJSON方法，就会优先执行toJSON方法
+    var book3= {
+            "title":"js从入门到女装",
+            "authors":["Jasonleeeeee","PraiseSunAsh"],
+            edition:3,
+            year:2011,
+            toJSON:function(){
+                return this.authors;
+            }
+        }
+        var JSONText3 = JSON.stringify(book3);
+        console.log(JSONText3);
+    </script>
+</body>
+</html>
