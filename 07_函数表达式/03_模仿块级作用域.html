@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        (function(){
+            //这里是块级作用域
+        })();
+        //第一个圆括号表示这个函数其实是个函数表达式
+        //第二个圆括号表示会立刻运行这个函数
+
+        //其实原理和下面这段代码是相通的
+        
+        var someFunc = function(){
+            //这里是块级作用域！！！！！！！
+        };
+        someFunc();
+        //此时无非是把匿名函数的value给起了个名字罢了
+    </script>
+</body>
+</html>
