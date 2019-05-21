@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // function creatErrorFun(){
+        //     var result = new Array();
+        //     for(var i = 0;i<10;i++){
+        //         result[i] = function(){
+        //             return i;
+        //         }
+        //     }
+        //     return result;
+        // }
+
+        // console.log(creatErrorFun());//(10) [ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ]
+        //最终会发现所有的函数返回的都是10
+        //因为所有的函数中都引用的是同一个i
+
+        //正确写法
+        function creatRightFun(){
+            var result = new Array();
+            for(var j = 0;j<10;j++){
+                result[j] = function(num){
+                    return function(){
+                        return num;
+                    }
+                }(j);//要把i传进内部函数
+            }
+            return result;
+        }
+        var arr = new Array;  
+        arr = creatRightFun();
+        for(var x = 0;x<10;x++){
+            console.log(arr[x]());
+        }
+        //此时我们看到数组中的每个函数都返回了不同的值
+
+    </script>
+</body>
+</html>
