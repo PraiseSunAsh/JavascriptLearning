@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="myBtn"></button>
+    <script>
+        var btn = document.getElementById("myBtn");
+        var handle = function () {
+            alert("莫挨老子")
+        }
+        //封装好的Eventutil
+        var EventUtil = {
+            addHandler: function (element, type, handler) {
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                } else if (element.attachEvent) {
+                    element.attachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = handler;
+                }
+            },
+            removeHandler: function (element, type, handler) {
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                } else if (element.detachEvent) {
+                    element.detachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = null;
+                }
+            },
+
+            getEvent: function (event) {
+                return event ? event : window.event;
+            },
+            getTarget: function (event) {
+                return event.target || event.srcElement;
+            },
+            preventDefault: function (event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false;
+                }
+            },
+            stopPropagation: function (event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    event.cancelBubbles = true;
+                }
+            },
+            getRelatedTarget: function (event) {
+                if (event.relatedTarger) {
+                    return event.relatedTarget;
+                } else if (event.toElement) {
+                    return event.toElement;
+                } else if (event.fromElement) {
+                    return event.fromElement;
+                } else { return null; }
+
+            }
+
+        }
+        //用的时候把交互元素，事件的type，以及事件的动作都传进去
+        //心疼老程序员一秒
+        EventUtil.addHandler(btn,"click",handle);
+        //底下是移除事件
+        // EventUtil.removeHandler(btn,"click",handle);
+    </script>
+</body>
+
+</html>
