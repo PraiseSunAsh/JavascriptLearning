@@ -1,22 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Event Delegation Example</title>
+    <script type="text/javascript" src="EventUtil.js"></script>
 </head>
 <body>
-
-    <ul>
-        <li id="go">Go somewhere</li>
-        <li id="do">Do something</li>
-        <li id="say">Say hi</li>
-        
-
+    <ul id="myLinks">
+        <li id="goSomewhere">Go somewhere</li>
+        <li id="doSomething">Do something</li>
+        <li id="sayHi">Say hi</li>
     </ul>
-    <script>
+    <script type="text/javascript">
+    
+    (function(){
+        var list = document.getElementById("myLinks");
         
+        var EventUtil = {
+            addHandler: function (element, type, handler) {
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                } else if (element.attachEvent) {
+                    element.attachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = handler;
+                }
+            },
+            removeHandler: function (element, type, handler) {
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                } else if (element.detachEvent) {
+                    element.detachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = null;
+                }
+            },
+
+            getEvent: function (event) {
+                return event ? event : window.event;
+            },
+            getTarget: function (event) {
+                return event.target || event.srcElement;
+            },
+            preventDefault: function (event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false;
+                }
+            },
+            stopPropagation: function (event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    event.cancelBubbles = true;
+                }
+            },
+            getRelatedTarget: function (event) {
+                if (event.relatedTarger) {
+                    return event.relatedTarget;
+                } else if (event.toElement) {
+                    return event.toElement;
+                } else if (event.fromElement) {
+                    return event.fromElement;
+                } else { return null; }
+
+            }
+
+        }
+
+
+        EventUtil.addHandler(list, "click", function(event){
+            event = EventUtil.getEvent(event);
+            var target = EventUtil.getTarget(event);
+            //正常情况下应该对每个li中添加事件
+            //利用了冒泡机制，点击子元素父元素就会相应到应有的事件
+            //无非在代码逻辑上多了次对是哪个子元素的判断
+            switch(target.id){
+                case "doSomething":
+                    document.title = "I changed the document's title";
+                    break;
+        
+                case "goSomewhere":
+                    location.href = "http://www.wrox.com";
+                    break;
+        
+                case "sayHi":
+                    alert("hi");
+                    break;
+            }
+        });
+    })();
+    
     </script>
 </body>
 </html>
