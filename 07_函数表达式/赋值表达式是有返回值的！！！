@@ -1,0 +1,6 @@
+行吧 ，这么重要的细节竟然没有注意
+
+如果在node中的repl环境下(或者是chrome的Console中)运行 a = 1,
+是可以看到返回值的
+但如果运行var b = 1,
+只会返回一个undefined
