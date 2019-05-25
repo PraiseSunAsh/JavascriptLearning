@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //js标准委员会的zz到TM2015年才知道上块级作用域
+        {
+            let a = 1;
+            var b = 2;
+        }
+        // console.log(a);//编译器会报错说a没定义
+        // console.log(b);
+
+        //这是之前的那个例子
+        var a = [];
+        for(let i = 0;i<10;i++){
+            a[i] = function(){
+               console.log(i);
+            }
+        }
+        a[5]();//5出来了，不再是10了嘤嘤嘤
+
+        //let没有变量提升
+        console.log(c);//undefined
+        var c = 3;
+        // console.log(d);//直接报错
+        let d = 4;
+
+        //箭头函数中的this问题
+        var obj2 = {f:456};
+        const obj = {
+            a:()=>{console.log(this.obj2.f)},
+            //我们发现最终打印出来了456，说明箭头函数中的this指向的是全局(?????)
+            b:function(){
+                console.log(this.e);
+            },
+            e:123
+        }
+        obj.a();
+        obj.b();
+
+
+    </script>
+</body>
+</html>
